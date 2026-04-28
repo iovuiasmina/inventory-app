@@ -1,4 +1,4 @@
-const BASE_URL = "/api/items";
+const BASE_URL = `${"https://inventory-app-yn2g.onrender.com"}/api/items`;
 
 export async function getAllItems(search = "", category = "") {
   let url = BASE_URL;
