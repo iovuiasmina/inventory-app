@@ -231,18 +231,6 @@ function ManagePage() {
               Valoare estimată (RON) *
             </label>
             <div style={{ position: "relative" }}>
-              <span
-                style={{
-                  position: "absolute",
-                  left: "0.875rem",
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  color: "#9333ea",
-                  fontWeight: "600",
-                }}
-              >
-                RON
-              </span>
               <input
                 type="number"
                 id="value"
@@ -254,7 +242,7 @@ function ManagePage() {
                 value={form.value}
                 onChange={handleChange}
                 style={{
-                  paddingLeft: "2.25rem",
+                  paddingLeft: "1.75rem",
                   ...(errors.value ? { borderColor: "#dc2626" } : {}),
                 }}
               />
