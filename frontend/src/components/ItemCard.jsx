@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 function ItemCard({ item, onDelete, index = 0 }) {
   const formattedValue = new Intl.NumberFormat("en-US", {
     style: "currency",
-    currency: "USD",
+    currency: "RON",
   }).format(item.value);
 
   const createdAt = item.createdAt

@@ -228,7 +228,7 @@ function ManagePage() {
           </div>
           <div style={{ marginBottom: "1.25rem" }}>
             <label className="form-label" htmlFor="value">
-              Valoare estimată (USD) *
+              Valoare estimată (RON) *
             </label>
             <div style={{ position: "relative" }}>
               <span
@@ -254,7 +254,7 @@ function ManagePage() {
                 value={form.value}
                 onChange={handleChange}
                 style={{
-                  paddingLeft: "1.75rem",
+                  paddingLeft: "2.25rem",
                   ...(errors.value ? { borderColor: "#dc2626" } : {}),
                 }}
               />

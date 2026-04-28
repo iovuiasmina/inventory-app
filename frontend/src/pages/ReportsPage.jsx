@@ -105,7 +105,7 @@ function ReportsPage() {
       <div class="stat-label">Total articole</div>
     </div>
     <div class="stat-card">
-      <div class="stat-value">$${totalValue.toFixed(2)}</div>
+      <div class="stat-value">RON${totalValue.toFixed(2)}</div>
       <div class="stat-label">Valoare totală</div>
     </div>
   </div>
@@ -122,7 +122,7 @@ function ReportsPage() {
     </thead>
     <tbody>${rows}</tbody>
   </table>
-  <div class="total">Valoare totală inventar: $${totalValue.toFixed(2)}</div>
+  <div class="total">Valoare totală inventar: RON${totalValue.toFixed(2)}</div>
 </body>
 </html>`;
 
