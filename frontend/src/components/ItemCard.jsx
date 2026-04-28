@@ -30,7 +30,7 @@ function ItemCard({ item, onDelete, index = 0 }) {
       >
         {item.photo ? (
           <img
-            src={item.photo}
+            src={`${import.meta.env.VITE_API_URL || ""}${item.photo}`}
             alt={item.name}
             style={{
               width: "100%",

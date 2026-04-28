@@ -313,7 +313,7 @@ function ManagePage() {
                 }}
               >
                 <img
-                  src={photoPreview || currentPhoto}
+                  src={photoPreview || `${import.meta.env.VITE_API_URL || ""}${currentPhoto}`}
                   alt="Previzualizare"
                   style={{ width: "100%", height: "100%", objectFit: "cover" }}
                 />
