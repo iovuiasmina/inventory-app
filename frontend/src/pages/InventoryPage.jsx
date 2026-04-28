@@ -1,22 +1,9 @@
-/**
- * pages/InventoryPage.jsx — Pagina principala: afisare inventar + cautare
- * Autor: [NumeStudent1]
- * 
- * Functionalitati:
- *  - Afiseaza toate articolele in format card grid (responsive)
- *  - Cautare full-text (name, serial, description)
- *  - Filtrare dupa categorie
- *  - Stergere cu confirmare
- *  - Afisare valoare totala inventar
- *  - Link catre export rapoarte
- */
 import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { getAllItems, deleteItem } from "../api/inventoryApi.js";
 import ItemCard from "../components/ItemCard.jsx";
 import Toast from "../components/Toast.jsx";
 
-// Categorii predefinite pentru filtrare rapida
 const CATEGORIES = [
   "Toate",
   "Electronics",
@@ -29,15 +16,13 @@ const CATEGORIES = [
 ];
 
 function InventoryPage() {
-  // ── State ───────────────────────────────────────────────────
-  const [items, setItems] = useState([]);          // lista articole
-  const [loading, setLoading] = useState(true);    // indicator incarcare
-  const [error, setError] = useState(null);        // eroare fetch
-  const [search, setSearch] = useState("");        // text cautare
-  const [category, setCategory] = useState("Toate"); // categorie selectata
-  const [toast, setToast] = useState(null);        // notificare temporara
+  const [items, setItems] = useState([]);         
+  const [loading, setLoading] = useState(true);   
+  const [error, setError] = useState(null);       
+  const [search, setSearch] = useState("");       
+  const [category, setCategory] = useState("Toate"); 
+  const [toast, setToast] = useState(null);        
 
-  // ── Incarcare date ───────────────────────────────────────────
   const loadItems = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -52,14 +37,11 @@ function InventoryPage() {
     }
   }, [search, category]);
 
-  // Reincarca la schimbarea cautarii sau categoriei
   useEffect(() => {
-    // Debounce cautare: asteptam 400ms dupa ce utilizatorul se opreste din scris
     const timer = setTimeout(loadItems, 400);
     return () => clearTimeout(timer);
   }, [loadItems]);
 
-  // ── Stergere articol ─────────────────────────────────────────
   const handleDelete = async (id, name) => {
     if (!window.confirm(`Sigur doresti sa stergi "${name}"?`)) return;
     try {
@@ -71,17 +53,14 @@ function InventoryPage() {
     }
   };
 
-  // ── Valoare totala inventar ──────────────────────────────────
   const totalValue = items.reduce((sum, item) => sum + parseFloat(item.value || 0), 0);
   const formattedTotal = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
   }).format(totalValue);
 
-  // ── Render ───────────────────────────────────────────────────
   return (
     <div>
-      {/* ── Header sectiune ── */}
       <div
         className="card-glass animate-fade-in-up"
         style={{ padding: "2rem", marginBottom: "2rem" }}
@@ -95,7 +74,6 @@ function InventoryPage() {
             gap: "1rem",
           }}
         >
-          {/* Titlu + statistici */}
           <div>
             <h1
               style={{
@@ -108,7 +86,7 @@ function InventoryPage() {
                 marginBottom: "0.25rem",
               }}
             >
-              📦 Inventarul Meu
+              Inventarul Meu
             </h1>
             <p style={{ color: "#9b72bf", fontSize: "0.9rem" }}>
               {items.length} articol{items.length !== 1 ? "e" : ""} •{" "}
@@ -116,19 +94,15 @@ function InventoryPage() {
               <strong style={{ color: "#9333ea" }}>{formattedTotal}</strong>
             </p>
           </div>
-
-          {/* Butoane actiuni rapide */}
           <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
             <Link to="/manage" className="btn-primary" style={{ textDecoration: "none" }}>
-              ➕ Articol nou
+              Articol nou
             </Link>
             <Link to="/reports" className="btn-secondary" style={{ textDecoration: "none" }}>
-              📊 Rapoarte
+              Rapoarte
             </Link>
           </div>
         </div>
-
-        {/* ── Bara de cautare ── */}
         <div
           style={{
             display: "flex",
@@ -147,7 +121,6 @@ function InventoryPage() {
                 fontSize: "1rem",
               }}
             >
-              🔍
             </span>
             <input
               type="text"
@@ -158,8 +131,6 @@ function InventoryPage() {
               style={{ paddingLeft: "2.5rem" }}
             />
           </div>
-
-          {/* Selector categorie */}
           <select
             className="form-input"
             style={{ width: "auto", minWidth: "150px" }}
@@ -174,16 +145,12 @@ function InventoryPage() {
           </select>
         </div>
       </div>
-
-      {/* ── Loading ── */}
       {loading && (
         <div style={{ textAlign: "center", padding: "3rem", color: "#9333ea" }}>
           <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>⏳</div>
           <p>Se încarcă inventarul...</p>
         </div>
       )}
-
-      {/* ── Eroare ── */}
       {error && !loading && (
         <div
           className="card-glass"
@@ -194,7 +161,7 @@ function InventoryPage() {
             borderColor: "rgba(239,68,68,0.2)",
           }}
         >
-          <p>❌ {error}</p>
+          <p>{error}</p>
           <button
             className="btn-primary"
             onClick={loadItems}
@@ -204,8 +171,6 @@ function InventoryPage() {
           </button>
         </div>
       )}
-
-      {/* ── Lista goala ── */}
       {!loading && !error && items.length === 0 && (
         <div
           className="card-glass animate-fade-in-up"
@@ -233,12 +198,10 @@ function InventoryPage() {
             className="btn-primary"
             style={{ textDecoration: "none" }}
           >
-            ➕ Adaugă primul articol
+            Adaugă primul articol
           </Link>
         </div>
       )}
-
-      {/* ── Grid articole ── */}
       {!loading && !error && items.length > 0 && (
         <div
           style={{
@@ -257,8 +220,6 @@ function InventoryPage() {
           ))}
         </div>
       )}
-
-      {/* ── Toast notificare ── */}
       {toast && (
         <Toast
           message={toast.message}

@@ -1,14 +1,8 @@
-/**
- * components/Navbar.jsx — Bara de navigare globala
- * Autor: [NumeStudent2]
- * Rute: / (Inventar), /manage (Adauga/Editeaza), /reports (Rapoarte)
- */
 import { Link, useLocation } from "react-router-dom";
 
 function Navbar() {
   const location = useLocation();
 
-  // Verifica daca o ruta este activa
   const isActive = (path) =>
     path === "/"
       ? location.pathname === "/"
@@ -32,7 +26,6 @@ function Navbar() {
             height: "64px",
           }}
         >
-          {/* Logo / Titlu aplicatie */}
           <Link
             to="/"
             style={{
@@ -42,7 +35,6 @@ function Navbar() {
               textDecoration: "none",
             }}
           >
-            <span style={{ fontSize: "1.5rem" }}>📦</span>
             <span
               style={{
                 fontFamily: "var(--font-display)",
@@ -55,13 +47,11 @@ function Navbar() {
               Inventar Personal
             </span>
           </Link>
-
-          {/* Linkuri de navigare */}
           <div style={{ display: "flex", gap: "0.25rem" }}>
             {[
-              { path: "/", label: "📋 Inventar" },
-              { path: "/manage", label: "➕ Adaugă" },
-              { path: "/reports", label: "📊 Rapoarte" },
+              { path: "/", label: "Inventar" },
+              { path: "/manage", label: "Adaugă" },
+              { path: "/reports", label: "Rapoarte" },
             ].map(({ path, label }) => (
               <Link
                 key={path}

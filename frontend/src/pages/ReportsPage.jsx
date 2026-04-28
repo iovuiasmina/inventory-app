@@ -1,13 +1,3 @@
-/**
- * pages/ReportsPage.jsx — Pagina de rapoarte si export date
- * Autor: [NumeStudent2]
- *
- * Functionalitati:
- *  - Export inventar ca fisier HTML (descarca in browser)
- *  - Export inventar ca fisier CSV
- *  - Previzualizare tabel in pagina
- *  - Statistici sumar inventar
- */
 import { useState, useEffect } from "react";
 import { getAllItems } from "../api/inventoryApi.js";
 
@@ -16,7 +6,6 @@ function ReportsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // ── Incarcare articole ───────────────────────────────────────
   useEffect(() => {
     async function load() {
       setLoading(true);
@@ -32,7 +21,6 @@ function ReportsPage() {
     load();
   }, []);
 
-  // ── Statistici sumar ─────────────────────────────────────────
   const totalValue = items.reduce(
     (sum, item) => sum + parseFloat(item.value || 0),
     0
@@ -42,16 +30,13 @@ function ReportsPage() {
     null
   );
 
-  // Grupare dupa categorie
   const byCategory = items.reduce((acc, item) => {
     const cat = item.category || "Necategorizat";
     acc[cat] = (acc[cat] || 0) + 1;
     return acc;
   }, {});
 
-  // ── Export CSV ───────────────────────────────────────────────
   const exportCSV = () => {
-    // Generam CSV-ul direct in browser (fara cerere la backend)
     const header = "Nume,Număr de Serie,Valoare,Categorie,Descriere\n";
     const rows = items
       .map(
@@ -61,7 +46,6 @@ function ReportsPage() {
       .join("\n");
     const csvContent = header + rows;
 
-    // Cream un link de download si il activam
     const blob = new Blob(["\uFEFF" + csvContent], {
       type: "text/csv;charset=utf-8;",
     });
@@ -75,9 +59,7 @@ function ReportsPage() {
     URL.revokeObjectURL(url);
   };
 
-  // ── Export HTML ──────────────────────────────────────────────
   const exportHTML = () => {
-    // Generam HTML-ul direct in browser
     const rows = items
       .map(
         (item) => `
@@ -114,7 +96,7 @@ function ReportsPage() {
   </style>
 </head>
 <body>
-  <h1>📦 Raport Inventar Personal</h1>
+  <h1>Raport Inventar Personal</h1>
   <p class="generated">Generat la: ${new Date().toLocaleString("ro-RO")}</p>
   
   <div class="summary">
@@ -155,10 +137,8 @@ function ReportsPage() {
     URL.revokeObjectURL(url);
   };
 
-  // ── Render ───────────────────────────────────────────────────
   return (
     <div className="animate-fade-in-up">
-      {/* Header */}
       <div className="card-glass" style={{ padding: "2rem", marginBottom: "1.5rem" }}>
         <h1
           style={{
@@ -171,24 +151,20 @@ function ReportsPage() {
             marginBottom: "0.25rem",
           }}
         >
-          📊 Rapoarte Inventar
+          Rapoarte Inventar
         </h1>
         <p style={{ color: "#9b72bf", fontSize: "0.9rem" }}>
           Exportați inventarul în format HTML sau CSV pentru arhivare sau imprimare.
         </p>
-
-        {/* Butoane export */}
         <div style={{ display: "flex", gap: "1rem", marginTop: "1.5rem", flexWrap: "wrap" }}>
           <button className="btn-primary" onClick={exportHTML} disabled={loading || items.length === 0}>
-            🌐 Export HTML
+            Export HTML
           </button>
           <button className="btn-secondary" onClick={exportCSV} disabled={loading || items.length === 0}>
-            📄 Export CSV
+            Export CSV
           </button>
         </div>
       </div>
-
-      {/* Statistici */}
       {!loading && !error && (
         <div
           style={{
@@ -198,7 +174,6 @@ function ReportsPage() {
             marginBottom: "1.5rem",
           }}
         >
-          {/* Total articole */}
           <div className="card-glass" style={{ padding: "1.25rem", textAlign: "center" }}>
             <div
               style={{
@@ -215,8 +190,6 @@ function ReportsPage() {
               Total articole
             </div>
           </div>
-
-          {/* Valoare totala */}
           <div className="card-glass" style={{ padding: "1.25rem", textAlign: "center" }}>
             <div
               style={{
@@ -233,8 +206,6 @@ function ReportsPage() {
               Valoare totală
             </div>
           </div>
-
-          {/* Cel mai valoros articol */}
           {maxItem && (
             <div className="card-glass" style={{ padding: "1.25rem", textAlign: "center" }}>
               <div
@@ -254,8 +225,6 @@ function ReportsPage() {
               </div>
             </div>
           )}
-
-          {/* Categorii */}
           <div className="card-glass" style={{ padding: "1.25rem", textAlign: "center" }}>
             <div
               style={{
@@ -274,17 +243,15 @@ function ReportsPage() {
           </div>
         </div>
       )}
-
-      {/* Tabel previzualizare */}
       {loading && (
         <div style={{ textAlign: "center", padding: "3rem", color: "#9333ea" }}>
-          ⏳ Se încarcă datele...
+          Se încarcă datele...
         </div>
       )}
 
       {error && (
         <div className="card-glass" style={{ padding: "1.5rem", color: "#dc2626" }}>
-          ❌ {error}
+          {error}
         </div>
       )}
 
@@ -300,8 +267,6 @@ function ReportsPage() {
           >
             Previzualizare tabel inventar
           </h2>
-
-          {/* Tabel responsive */}
           <div style={{ overflowX: "auto" }}>
             <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.88rem" }}>
               <thead>
@@ -367,7 +332,6 @@ function ReportsPage() {
                     </td>
                   </tr>
                 ))}
-                {/* Rand total */}
                 <tr
                   style={{
                     borderTop: "2px solid rgba(147,51,234,0.2)",

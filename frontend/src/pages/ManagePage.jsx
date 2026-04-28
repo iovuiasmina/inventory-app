@@ -1,14 +1,3 @@
-/**
- * pages/ManagePage.jsx — Pagina de adaugare si editare articole
- * Autor: [NumeStudent1]
- *
- * Functionalitati:
- *  - Formular pentru articol nou (/manage)
- *  - Formular pre-completat pentru editare (/manage/:id)
- *  - Validare client-side inainte de trimitere
- *  - Upload fotografie cu previzualizare
- *  - Feedback vizual (erori, succes)
- */
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
@@ -19,7 +8,6 @@ import {
 } from "../api/inventoryApi.js";
 import Toast from "../components/Toast.jsx";
 
-// Categorii disponibile pentru selectare
 const CATEGORIES = [
   "Electronics",
   "Computers",
@@ -30,7 +18,6 @@ const CATEGORIES = [
   "Other",
 ];
 
-// Starea initiala a formularului (articol gol)
 const EMPTY_FORM = {
   name: "",
   serialNumber: "",
@@ -40,22 +27,20 @@ const EMPTY_FORM = {
 };
 
 function ManagePage() {
-  const { id } = useParams();          // daca exista id → mod editare
+  const { id } = useParams();          
   const navigate = useNavigate();
-  const isEditing = Boolean(id);       // true daca editam, false daca adaugam
+  const isEditing = Boolean(id);       
 
-  // ── State ───────────────────────────────────────────────────
   const [form, setForm] = useState(EMPTY_FORM);
-  const [errors, setErrors] = useState({});       // erori de validare
-  const [loading, setLoading] = useState(false);  // submit in curs
-  const [loadingItem, setLoadingItem] = useState(isEditing); // incarcare articol
+  const [errors, setErrors] = useState({});       
+  const [loading, setLoading] = useState(false);  
+  const [loadingItem, setLoadingItem] = useState(isEditing); 
   const [toast, setToast] = useState(null);
-  const [photoFile, setPhotoFile] = useState(null);         // fisier imagine selectat
-  const [photoPreview, setPhotoPreview] = useState(null);   // URL previzualizare
-  const [currentPhoto, setCurrentPhoto] = useState(null);   // poza existenta (la editare)
-  const [savedItemId, setSavedItemId] = useState(null);     // ID-ul articolului nou creat
+  const [photoFile, setPhotoFile] = useState(null);         
+  const [photoPreview, setPhotoPreview] = useState(null);   
+  const [currentPhoto, setCurrentPhoto] = useState(null);   
+  const [savedItemId, setSavedItemId] = useState(null);     
 
-  // ── Incarcare articol la editare ─────────────────────────────
   useEffect(() => {
     if (!isEditing) return;
 
@@ -81,20 +66,16 @@ function ManagePage() {
     loadItem();
   }, [id, isEditing]);
 
-  // ── Gestionare schimbari formular ────────────────────────────
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
-    // Stergem eroarea campului modificat
     setErrors((prev) => ({ ...prev, [name]: null }));
   };
 
-  // ── Selectare fotografie ─────────────────────────────────────
   const handlePhotoChange = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Validare tip fisier
     const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
     if (!allowedTypes.includes(file.type)) {
       setToast({
@@ -104,20 +85,17 @@ function ManagePage() {
       return;
     }
 
-    // Validare marime (max 5MB)
     if (file.size > 5 * 1024 * 1024) {
       setToast({ message: "Imaginea nu poate depasi 5MB.", type: "error" });
       return;
     }
 
     setPhotoFile(file);
-    // Previzualizare locala inainte de upload
     const reader = new FileReader();
     reader.onload = (ev) => setPhotoPreview(ev.target.result);
     reader.readAsDataURL(file);
   };
 
-  // ── Validare client-side ─────────────────────────────────────
   const validateForm = () => {
     const newErrors = {};
     if (!form.name.trim()) newErrors.name = "Numele este obligatoriu.";
@@ -132,7 +110,6 @@ function ManagePage() {
     return Object.keys(newErrors).length === 0;
   };
 
-  // ── Trimitere formular ───────────────────────────────────────
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
@@ -154,13 +131,11 @@ function ManagePage() {
         setToast({ message: "Articolul a fost adăugat! 🎉", type: "success" });
       }
 
-      // Upload fotografie daca a fost selectata
       if (photoFile) {
         const targetId = isEditing ? id : savedItem.id;
         await uploadPhoto(targetId, photoFile);
       }
 
-      // Navigam inapoi la inventar dupa 1.5s
       setTimeout(() => navigate("/"), 1500);
     } catch (err) {
       setToast({ message: err.message, type: "error" });
@@ -169,7 +144,6 @@ function ManagePage() {
     }
   };
 
-  // ── Loading state la incarcarea articolului ──────────────────
   if (loadingItem) {
     return (
       <div style={{ textAlign: "center", padding: "3rem", color: "#9333ea" }}>
@@ -179,13 +153,11 @@ function ManagePage() {
     );
   }
 
-  // ── Render ───────────────────────────────────────────────────
   return (
     <div
       style={{ maxWidth: "640px", margin: "0 auto" }}
       className="animate-fade-in-up"
     >
-      {/* Header */}
       <div
         className="card-glass"
         style={{ padding: "2rem", marginBottom: "1.5rem" }}
@@ -201,7 +173,7 @@ function ManagePage() {
             marginBottom: "0.25rem",
           }}
         >
-          {isEditing ? "✏️ Editează Articolul" : "➕ Articol Nou"}
+          {isEditing ? "Editează Articolul" : "Articol Nou"}
         </h1>
         <p style={{ color: "#9b72bf", fontSize: "0.9rem" }}>
           {isEditing
@@ -209,11 +181,8 @@ function ManagePage() {
             : "Adaugă un nou articol în inventarul tău personal."}
         </p>
       </div>
-
-      {/* Formular */}
       <div className="card-glass" style={{ padding: "2rem" }}>
         <form onSubmit={handleSubmit} noValidate>
-          {/* ── Nume articol ── */}
           <div style={{ marginBottom: "1.25rem" }}>
             <label className="form-label" htmlFor="name">
               Nume articol *
@@ -234,8 +203,6 @@ function ManagePage() {
               </p>
             )}
           </div>
-
-          {/* ── Numar de serie ── */}
           <div style={{ marginBottom: "1.25rem" }}>
             <label className="form-label" htmlFor="serialNumber">
               Număr de serie *
@@ -259,8 +226,6 @@ function ManagePage() {
               </p>
             )}
           </div>
-
-          {/* ── Valoare ── */}
           <div style={{ marginBottom: "1.25rem" }}>
             <label className="form-label" htmlFor="value">
               Valoare estimată (USD) *
@@ -276,7 +241,7 @@ function ManagePage() {
                   fontWeight: "600",
                 }}
               >
-                $
+                RON
               </span>
               <input
                 type="number"
@@ -300,8 +265,6 @@ function ManagePage() {
               </p>
             )}
           </div>
-
-          {/* ── Categorie ── */}
           <div style={{ marginBottom: "1.25rem" }}>
             <label className="form-label" htmlFor="category">
               Categorie
@@ -321,8 +284,6 @@ function ManagePage() {
               ))}
             </select>
           </div>
-
-          {/* ── Descriere ── */}
           <div style={{ marginBottom: "1.25rem" }}>
             <label className="form-label" htmlFor="description">
               Descriere
@@ -338,12 +299,8 @@ function ManagePage() {
               style={{ resize: "vertical", lineHeight: "1.5" }}
             />
           </div>
-
-          {/* ── Upload fotografie ── */}
           <div style={{ marginBottom: "1.75rem" }}>
             <label className="form-label">Fotografie</label>
-
-            {/* Previzualizare poza curenta sau noua */}
             {(photoPreview || currentPhoto) && (
               <div
                 style={{
@@ -362,8 +319,6 @@ function ManagePage() {
                 />
               </div>
             )}
-
-            {/* Input file personalizat */}
             <label
               htmlFor="photo"
               className="btn-secondary"
@@ -382,8 +337,6 @@ function ManagePage() {
               JPG, PNG, GIF sau WebP • Max 5MB
             </p>
           </div>
-
-          {/* ── Butoane submit ── */}
           <div style={{ display: "flex", gap: "0.75rem" }}>
             <button
               type="submit"
@@ -392,10 +345,10 @@ function ManagePage() {
               style={{ flex: 1, justifyContent: "center" }}
             >
               {loading
-                ? "⏳ Se salvează..."
+                ? "Se salvează..."
                 : isEditing
-                ? "💾 Salvează modificările"
-                : "➕ Adaugă articolul"}
+                ? "Salvează modificările"
+                : "Adaugă articolul"}
             </button>
             <button
               type="button"
@@ -403,13 +356,11 @@ function ManagePage() {
               onClick={() => navigate("/")}
               style={{ flex: 1, justifyContent: "center" }}
             >
-              ↩️ Anulează
+              Anulează
             </button>
           </div>
         </form>
       </div>
-
-      {/* Toast notificare */}
       {toast && (
         <Toast
           message={toast.message}

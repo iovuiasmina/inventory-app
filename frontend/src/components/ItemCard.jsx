@@ -1,18 +1,11 @@
-/**
- * components/ItemCard.jsx — Card reutilizabil pentru un articol din inventar
- * Autor: [NumeStudent2]
- * Afiseaza: poza, nume, numar serie, valoare, categorie, butoane editare/stergere
- */
 import { Link } from "react-router-dom";
 
 function ItemCard({ item, onDelete, index = 0 }) {
-  // Formatam valoarea ca moneda
   const formattedValue = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
   }).format(item.value);
 
-  // Data adaugarii formatata
   const createdAt = item.createdAt
     ? new Date(item.createdAt).toLocaleDateString("ro-RO")
     : "-";
@@ -22,7 +15,6 @@ function ItemCard({ item, onDelete, index = 0 }) {
       className={`card-glass animate-fade-in-up stagger-${Math.min(index + 1, 5)}`}
       style={{ padding: "1.25rem" }}
     >
-      {/* Poza articolului (daca exista) sau placeholder */}
       <div
         style={{
           width: "100%",
@@ -50,17 +42,12 @@ function ItemCard({ item, onDelete, index = 0 }) {
           <span style={{ fontSize: "3.5rem", opacity: 0.5 }}>📷</span>
         )}
       </div>
-
-      {/* Informatii articol */}
       <div>
-        {/* Categorie badge */}
         {item.category && (
           <span className="badge" style={{ marginBottom: "0.5rem" }}>
             {item.category}
           </span>
         )}
-
-        {/* Nume articol */}
         <h3
           style={{
             fontFamily: "var(--font-display)",
@@ -72,8 +59,6 @@ function ItemCard({ item, onDelete, index = 0 }) {
         >
           {item.name}
         </h3>
-
-        {/* Numar de serie */}
         <p
           style={{
             fontSize: "0.78rem",
@@ -85,8 +70,6 @@ function ItemCard({ item, onDelete, index = 0 }) {
         >
           S/N: {item.serialNumber}
         </p>
-
-        {/* Descriere (daca exista) */}
         {item.description && (
           <p
             style={{
@@ -99,8 +82,6 @@ function ItemCard({ item, onDelete, index = 0 }) {
             {item.description}
           </p>
         )}
-
-        {/* Valoare + Data */}
         <div
           style={{
             display: "flex",
@@ -126,8 +107,6 @@ function ItemCard({ item, onDelete, index = 0 }) {
             {createdAt}
           </span>
         </div>
-
-        {/* Butoane actiuni */}
         <div
           style={{
             display: "flex",
@@ -140,14 +119,14 @@ function ItemCard({ item, onDelete, index = 0 }) {
             className="btn-secondary"
             style={{ flex: 1, justifyContent: "center", textDecoration: "none" }}
           >
-            ✏️ Editează
+            Editează
           </Link>
           <button
             className="btn-danger"
             onClick={() => onDelete(item.id, item.name)}
             style={{ flex: 1, justifyContent: "center" }}
           >
-            🗑️ Șterge
+            Șterge
           </button>
         </div>
       </div>

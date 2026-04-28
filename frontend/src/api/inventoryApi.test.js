@@ -1,24 +1,7 @@
-/**
- * inventoryApi.test.js — Teste unitare Jest pentru funcțiile API
- * Autor: [NumeStudent1], [NumeStudent2]
- * 
- * Rulare: npm test (din directorul frontend)
- * 
- * Testăm funcțiile din inventoryApi.js folosind fetch mock-uit.
- */
-
-// Mock global fetch
 global.fetch = jest.fn();
-
-// Importăm funcțiile de testat
-// Notă: deoarece fișierele folosesc ES modules, testele rulează cu jest + babel
-// sau cu opțiunea experimentalVmModules
 
 const BASE_URL = "/api/items";
 
-/**
- * Helper: creează un mock de răspuns fetch
- */
 function mockFetch(data, status = 200) {
   return Promise.resolve({
     ok: status >= 200 && status < 300,
@@ -27,9 +10,6 @@ function mockFetch(data, status = 200) {
   });
 }
 
-// ─────────────────────────────────────────────────────────────
-// Teste pentru getAllItems
-// ─────────────────────────────────────────────────────────────
 describe("getAllItems", () => {
   beforeEach(() => {
     fetch.mockClear();
@@ -66,9 +46,6 @@ describe("getAllItems", () => {
   });
 });
 
-// ─────────────────────────────────────────────────────────────
-// Teste pentru addItem
-// ─────────────────────────────────────────────────────────────
 describe("addItem", () => {
   beforeEach(() => {
     fetch.mockClear();
@@ -115,9 +92,6 @@ describe("addItem", () => {
   });
 });
 
-// ─────────────────────────────────────────────────────────────
-// Teste pentru deleteItem
-// ─────────────────────────────────────────────────────────────
 describe("deleteItem", () => {
   beforeEach(() => {
     fetch.mockClear();
@@ -146,13 +120,7 @@ describe("deleteItem", () => {
   });
 });
 
-// ─────────────────────────────────────────────────────────────
-// Teste pentru validare date (funcții pure)
-// ─────────────────────────────────────────────────────────────
 describe("Validare date inventar", () => {
-  /**
-   * Funcție de validare pură (identică cu logica din ManagePage)
-   */
   function validateItem(form) {
     const errors = {};
     if (!form.name?.trim()) errors.name = "Numele este obligatoriu.";
@@ -210,9 +178,6 @@ describe("Validare date inventar", () => {
   });
 });
 
-// ─────────────────────────────────────────────────────────────
-// Teste pentru formatare valori
-// ─────────────────────────────────────────────────────────────
 describe("Formatare valori monetare", () => {
   function formatCurrency(value) {
     return new Intl.NumberFormat("en-US", {

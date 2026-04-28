@@ -1,10 +1,3 @@
-/**
- * server.js — Serverul Express pentru aplicatia de Inventar Personal
- * Autor: [NumeStudent1], [NumeStudent2]
- * Rol: Intermediar intre frontend (React) si json-server (baza de date JSON)
- * Porturi: Express :5000, json-server :3000
- */
-
 const express = require("express");
 const cors = require("cors");
 const Joi = require("joi");
@@ -17,30 +10,21 @@ const app = express();
 const PORT = 5000;
 const JSON_SERVER_URL = "http://localhost:3000/items";
 
-// ─────────────────────────────────────────────────────────────
-// Middleware-uri globale
-// ─────────────────────────────────────────────────────────────
 app.use(cors());
 app.use(express.json());
 
-// Directorul pentru poze uploadate
 const UPLOADS_DIR = path.join(__dirname, "uploads");
 if (!fs.existsSync(UPLOADS_DIR)) {
   fs.mkdirSync(UPLOADS_DIR, { recursive: true });
 }
 
-// Servim fisierele statice din /uploads
 app.use("/uploads", express.static(UPLOADS_DIR));
 
-// ─────────────────────────────────────────────────────────────
-// Configurare Multer pentru upload fotografii
-// ─────────────────────────────────────────────────────────────
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, UPLOADS_DIR);
   },
   filename: (req, file, cb) => {
-    // Generam un nume unic pentru fisier
     const uniqueName = `${uuidv4()}${path.extname(file.originalname)}`;
     cb(null, uniqueName);
   },
@@ -48,7 +32,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({
   storage,
-  limits: { fileSize: 5 * 1024 * 1024 }, // max 5MB
+  limits: { fileSize: 5 * 1024 * 1024 }, 
   fileFilter: (req, file, cb) => {
     const allowedTypes = /jpeg|jpg|png|gif|webp/;
     const isValid = allowedTypes.test(
@@ -62,9 +46,7 @@ const upload = multer({
   },
 });
 
-// ─────────────────────────────────────────────────────────────
-// Schema de validare Joi pentru un articol de inventar
-// ─────────────────────────────────────────────────────────────
+
 const itemSchema = Joi.object({
   name: Joi.string().min(1).max(100).required().messages({
     "string.empty": "Numele articolului este obligatoriu",
@@ -82,33 +64,22 @@ const itemSchema = Joi.object({
   photo: Joi.string().optional().allow(null, ""),
 });
 
-// ─────────────────────────────────────────────────────────────
-// Middleware: validare ID numeric sau UUID
-// ─────────────────────────────────────────────────────────────
 const validateId = (req, res, next) => {
   if (!req.params.id) return next();
   next();
 };
 
-// ─────────────────────────────────────────────────────────────
-// Helper: fetch catre json-server
-// ─────────────────────────────────────────────────────────────
 async function fetchFromDB(url, options = {}) {
   const fetch = (await import("node-fetch")).default;
   const response = await fetch(url, options);
   return response;
 }
 
-// ─────────────────────────────────────────────────────────────
-// GET /api/items — Returneaza toate articolele din inventar
-// Suporta filtrare prin query: ?search=xbox&category=Electronics
-// ─────────────────────────────────────────────────────────────
 app.get("/api/items", async (req, res) => {
   try {
     const { search, category } = req.query;
     let url = JSON_SERVER_URL;
 
-    // Filtrare dupa categorie daca e specificata
     if (category) {
       url += `?category=${encodeURIComponent(category)}`;
     }
@@ -116,7 +87,6 @@ app.get("/api/items", async (req, res) => {
     const response = await fetchFromDB(url);
     let items = await response.json();
 
-    // Cautare full-text pe name, serialNumber, description
     if (search) {
       const searchLower = search.toLowerCase();
       items = items.filter(
@@ -135,9 +105,6 @@ app.get("/api/items", async (req, res) => {
   }
 });
 
-// ─────────────────────────────────────────────────────────────
-// GET /api/items/:id — Returneaza un articol dupa ID
-// ─────────────────────────────────────────────────────────────
 app.get("/api/items/:id", validateId, async (req, res) => {
   try {
     const response = await fetchFromDB(`${JSON_SERVER_URL}/${req.params.id}`);
@@ -152,11 +119,7 @@ app.get("/api/items/:id", validateId, async (req, res) => {
   }
 });
 
-// ─────────────────────────────────────────────────────────────
-// POST /api/items — Adauga un articol nou in inventar
-// ─────────────────────────────────────────────────────────────
 app.post("/api/items", async (req, res) => {
-  // Validam datele cu Joi
   const { error, value } = itemSchema.validate(req.body, {
     abortEarly: false,
   });
@@ -186,9 +149,6 @@ app.post("/api/items", async (req, res) => {
   }
 });
 
-// ─────────────────────────────────────────────────────────────
-// PUT /api/items/:id — Actualizeaza un articol existent
-// ─────────────────────────────────────────────────────────────
 app.put("/api/items/:id", validateId, async (req, res) => {
   const { error, value } = itemSchema.validate(req.body, {
     abortEarly: false,
@@ -220,12 +180,8 @@ app.put("/api/items/:id", validateId, async (req, res) => {
   }
 });
 
-// ─────────────────────────────────────────────────────────────
-// DELETE /api/items/:id — Sterge un articol din inventar
-// ─────────────────────────────────────────────────────────────
 app.delete("/api/items/:id", validateId, async (req, res) => {
   try {
-    // Preluam articolul pentru a sterge poza asociata
     const getResponse = await fetchFromDB(
       `${JSON_SERVER_URL}/${req.params.id}`
     );
@@ -234,7 +190,6 @@ app.delete("/api/items/:id", validateId, async (req, res) => {
     }
     const item = await getResponse.json();
 
-    // Stergem poza daca exista
     if (item.photo) {
       const photoPath = path.join(UPLOADS_DIR, path.basename(item.photo));
       if (fs.existsSync(photoPath)) {
@@ -258,9 +213,6 @@ app.delete("/api/items/:id", validateId, async (req, res) => {
   }
 });
 
-// ─────────────────────────────────────────────────────────────
-// POST /api/items/:id/photo — Upload fotografie pentru articol
-// ─────────────────────────────────────────────────────────────
 app.post(
   "/api/items/:id/photo",
   validateId,
@@ -271,7 +223,6 @@ app.post(
     }
 
     try {
-      // Preluam articolul existent
       const getResponse = await fetchFromDB(
         `${JSON_SERVER_URL}/${req.params.id}`
       );
@@ -280,7 +231,6 @@ app.post(
       }
       const item = await getResponse.json();
 
-      // Stergem poza veche daca exista
       if (item.photo) {
         const oldPhotoPath = path.join(
           UPLOADS_DIR,
@@ -291,10 +241,8 @@ app.post(
         }
       }
 
-      // URL-ul pozei noi
       const photoUrl = `/uploads/${req.file.filename}`;
 
-      // Actualizam articolul cu noua poza
       const updatedItem = { ...item, photo: photoUrl };
       await fetchFromDB(`${JSON_SERVER_URL}/${req.params.id}`, {
         method: "PUT",
@@ -310,15 +258,11 @@ app.post(
   }
 );
 
-// ─────────────────────────────────────────────────────────────
-// GET /api/export/csv — Exporta inventarul in format CSV
-// ─────────────────────────────────────────────────────────────
 app.get("/api/export/csv", async (req, res) => {
   try {
     const response = await fetchFromDB(JSON_SERVER_URL);
     const items = await response.json();
 
-    // Generam CSV-ul
     const header = "Name,Serial Number,Value,Category,Description\n";
     const rows = items
       .map(
@@ -341,9 +285,6 @@ app.get("/api/export/csv", async (req, res) => {
   }
 });
 
-// ─────────────────────────────────────────────────────────────
-// GET /api/export/html — Exporta inventarul ca raport HTML
-// ─────────────────────────────────────────────────────────────
 app.get("/api/export/html", async (req, res) => {
   try {
     const response = await fetchFromDB(JSON_SERVER_URL);
@@ -408,10 +349,7 @@ app.get("/api/export/html", async (req, res) => {
   }
 });
 
-// ─────────────────────────────────────────────────────────────
-// Pornim serverul Express
-// ─────────────────────────────────────────────────────────────
 app.listen(PORT, () => {
-  console.log(`✅ Server Express pornit pe http://localhost:${PORT}`);
-  console.log(`📦 json-server asteptat pe http://localhost:3000`);
+  console.log(`Server Express pornit pe http://localhost:${PORT}`);
+  console.log(`json-server asteptat pe http://localhost:3000`);
 });
