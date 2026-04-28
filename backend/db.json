@@ -1,0 +1,193 @@
+{
+  "items": [
+    {
+      "id": "1",
+      "name": "Sony WH-1000XM5",
+      "serialNumber": "SN-SONY-9921",
+      "value": 350.00,
+      "category": "Electronics",
+      "description": "Căști wireless cu noise cancelling activ",
+      "photo": null
+    },
+    {
+      "id": "2",
+      "name": "Canon EOS R6",
+      "serialNumber": "CAM-8822-R6",
+      "value": 2200.00,
+      "category": "Electronics",
+      "description": "Aparat foto Mirrorless Full Frame",
+      "photo": null
+    },
+    {
+      "id": "3",
+      "name": "Apple Watch Series 9",
+      "serialNumber": "AW9-7733-GHY",
+      "value": 399.00,
+      "category": "Electronics",
+      "description": "Smartwatch cu monitorizare sănătate și GPS",
+      "photo": null
+    },
+    {
+      "id": "4",
+      "name": "Dell XPS 15",
+      "serialNumber": "DELL-XPS-2024",
+      "value": 1850.00,
+      "category": "Computers",
+      "description": "Laptop performant pentru editare video și design",
+      "photo": null
+    },
+    {
+      "id": "5",
+      "name": "iPad Pro 12.9",
+      "serialNumber": "IPAD-M2-990",
+      "value": 1100.00,
+      "category": "Computers",
+      "description": "Tabletă cu procesor M2 și ecran Liquid Retina XDR",
+      "photo": null
+    },
+    {
+      "id": "6",
+      "name": "Monitor Gaming ASUS ROG",
+      "serialNumber": "ROG-27-4K",
+      "value": 650.00,
+      "category": "Computers",
+      "description": "Monitor 27 inch, 144Hz, rezoluție 4K",
+      "photo": null
+    },
+    {
+      "id": "7",
+      "name": "Scaun Ergonomic Herman Miller",
+      "serialNumber": "HM-AERON-V2",
+      "value": 1400.00,
+      "category": "Furniture",
+      "description": "Scaun de birou premium cu suport lombar avansat",
+      "photo": null
+    },
+    {
+      "id": "8",
+      "name": "Masă de dining din Stejar",
+      "serialNumber": "WOOD-TABLE-01",
+      "value": 850.00,
+      "category": "Furniture",
+      "description": "Masă masivă din lemn de stejar pentru 6 persoane",
+      "photo": null
+    },
+    {
+      "id": "9",
+      "name": "Canapea Chesterfield",
+      "serialNumber": "SOFA-CH-2023",
+      "value": 1200.00,
+      "category": "Furniture",
+      "description": "Canapea din piele naturală, stil clasic britanic",
+      "photo": null
+    },
+    {
+      "id": "10",
+      "name": "Geacă North Face Nuptse",
+      "serialNumber": "NF-JKT-1996",
+      "value": 280.00,
+      "category": "Clothing",
+      "description": "Geacă de iarnă cu puf, rezistentă la vânt",
+      "photo": null
+    },
+    {
+      "id": "11",
+      "name": "Levi's 501 Original",
+      "serialNumber": "LEV-501-BLUE",
+      "value": 95.00,
+      "category": "Clothing",
+      "description": "Blugi clasici din bumbac 100%",
+      "photo": null
+    },
+    {
+      "id": "12",
+      "name": "Hanorac Nike Tech Fleece",
+      "serialNumber": "NIKE-TF-001",
+      "value": 120.00,
+      "category": "Clothing",
+      "description": "Hanorac sport cu tehnologie de reținere a căldurii",
+      "photo": null
+    },
+    {
+      "id": "13",
+      "name": "Dune - Frank Herbert",
+      "serialNumber": "ISBN-9780441172719",
+      "value": 25.00,
+      "category": "Books",
+      "description": "Roman science-fiction, ediție cartonată",
+      "photo": null
+    },
+    {
+      "id": "14",
+      "name": "Sapiens - Yuval Noah Harari",
+      "serialNumber": "ISBN-9780062316097",
+      "value": 20.00,
+      "category": "Books",
+      "description": "O scurtă istorie a omenirii",
+      "photo": null
+    },
+    {
+      "id": "15",
+      "name": "Atomic Habits - James Clear",
+      "serialNumber": "ISBN-9780735211292",
+      "value": 18.00,
+      "category": "Books",
+      "description": "Carte despre dezvoltare personală și obiceiuri",
+      "photo": null
+    },
+    {
+      "id": "16",
+      "name": "Mașină de găurit Bosch Professional",
+      "serialNumber": "BOSCH-GSB-18V",
+      "value": 210.00,
+      "category": "Tools",
+      "description": "Mașină de găurit și înșurubat cu acumulator",
+      "photo": null
+    },
+    {
+      "id": "17",
+      "name": "Set Chei Tubulare Stanley",
+      "serialNumber": "STAN-99-SET",
+      "value": 145.00,
+      "category": "Tools",
+      "description": "Trusă de scule cu 120 de piese",
+      "photo": null
+    },
+    {
+      "id": "18",
+      "name": "Telemetru Laser Makita",
+      "serialNumber": "MAK-LASER-50",
+      "value": 90.00,
+      "category": "Tools",
+      "description": "Dispozitiv de măsurare distanță cu laser până la 50m",
+      "photo": null
+    },
+    {
+      "id": "19",
+      "name": "Bicicletă Mountain Bike",
+      "serialNumber": "MTB-TREK-X6",
+      "value": 750.00,
+      "category": "Other",
+      "description": "Bicicletă pentru teren accidentat, cadru aluminiu",
+      "photo": null
+    },
+    {
+      "id": "20",
+      "name": "Placă de surf Torq",
+      "serialNumber": "SURF-TQ-202",
+      "value": 480.00,
+      "category": "Other",
+      "description": "Placă de surf pentru nivel intermediar",
+      "photo": null
+    },
+    {
+      "id": "21",
+      "name": "Set Lego Star Wars Millennium Falcon",
+      "serialNumber": "LEGO-75192",
+      "value": 850.00,
+      "category": "Other",
+      "description": "Set de construcție complex, ediție de colecție",
+      "photo": null
+    }
+  ]
+}
