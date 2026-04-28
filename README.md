@@ -70,7 +70,7 @@ npm run dev
 
 Aplicația va fi disponibilă la: **http://localhost:5173**
 
-## ✨ Funcționalități implementate
+## Funcționalități implementate
 
 | Funcționalitate | Status |
 |-----------------|--------|
@@ -87,14 +87,14 @@ Aplicația va fi disponibilă la: **http://localhost:5173**
 | Design responsive | ✅ |
 | Validare formulare (client + server) | ✅ |
 
-## 🛠️ Tehnologii folosite
+## Tehnologii folosite
 
 - **Frontend**: React 18, React Router v6, Tailwind CSS v4, Vite
 - **Backend**: Node.js, Express.js, json-server, Joi, Multer
 - **Stocare date**: JSON (db.json via json-server)
 - **Design**: Tema roz & mov, glassmorphism, Google Fonts
 
-## 📡 API Endpoints
+## API Endpoints
 
 | Metodă | Endpoint | Descriere |
 |--------|----------|-----------|
