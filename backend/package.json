@@ -4,9 +4,9 @@
   "description": "Backend pentru aplicatia de urmarire inventar personal",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js",
-    "json-server": "json-server --watch db.json --port 3000"
+  "start": "npx json-server --watch db.json --port 3000 & node server.js",
+  "dev": "nodemon server.js",
+  "json-server": "npx json-server --watch db.json --port 3000"
   },
   "dependencies": {
     "cors": "^2.8.5",
