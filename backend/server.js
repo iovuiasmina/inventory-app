@@ -10,7 +10,12 @@ const app = express();
 const PORT = 5000;
 const JSON_SERVER_URL = "http://localhost:3000/items";
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    /\.vercel\.app$/
+  ]
+}));
 app.use(express.json());
 
 const UPLOADS_DIR = path.join(__dirname, "uploads");
