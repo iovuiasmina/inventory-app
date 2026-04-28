@@ -1,4 +1,4 @@
-# 📦 Inventar Personal — Aplicație Web
+# Inventar Personal — Aplicație Web
 
 **Proiect 19 — Urmărirea Inventarului**  
 Disciplina: Tehnologii Web  
@@ -6,7 +6,7 @@ Facultatea de Economie și Administrarea Afacerilor
 
 ---
 
-## 🏗️ Arhitectura aplicației
+## Arhitectura aplicației
 
 ```
 Browser (React :5173)
@@ -20,7 +20,7 @@ Express server.js (:5000)
 json-server (:3000) ↔ db.json
 ```
 
-## 📁 Structura fișierelor
+## Structura fișierelor
 
 ```
 inventory-app/
@@ -49,16 +49,14 @@ inventory-app/
         └── index.css              ← Tailwind v4 + stiluri custom
 ```
 
-## 🚀 Instalare și rulare
+## Instalare și rulare
 
 ### 1. Backend
 
 ```bash
 cd backend
 npm install
-# Terminal 1: pornire json-server
 npm run json-server
-# Terminal 2: pornire Express
 npm run dev
 ```
 
