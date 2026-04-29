@@ -96,7 +96,8 @@ function ItemCard({ item, onDelete, index = 0 }) {
             style={{
               fontSize: "1.2rem",
               fontWeight: "700",
-              background: "linear-gradient(135deg, #9333ea, #ec4899)",
+              // background: "linear-gradient(135deg, #9333ea, #ec4899)",
+              background: "red",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
             }}
