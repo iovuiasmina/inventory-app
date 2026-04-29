@@ -125,7 +125,7 @@ function InventoryPage() {
             <input
               type="text"
               className="form-input"
-              placeholder="Caută după nume, serial sau descriere..."
+              placeholder="Caută după nume..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               style={{ paddingLeft: "2.5rem" }}

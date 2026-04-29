@@ -1,5 +1,6 @@
 const BASE_URL = `${"https://inventory-app-sk44.onrender.com"}/api/items`;
 
+
 export async function getAllItems(search = "", category = "") {
   let url = BASE_URL;
   const params = new URLSearchParams();
