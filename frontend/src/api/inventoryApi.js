@@ -10,7 +10,15 @@ export async function getAllItems(search = "", category = "") {
 
   const response = await fetch(url);
   if (!response.ok) throw new Error("Nu s-au putut prelua articolele.");
-  return response.json();
+  const items = await response.json();
+
+  if (search) {
+    return items.filter(item =>
+      item.name.toLowerCase().includes(search.toLowerCase())
+    );
+  }
+
+  return items;
 }
 
 export async function getItemById(id) {
